@@ -20,16 +20,13 @@ app.use(bodyParser.json());
 //detectar archivos estaticos de la carpeta public
 app.use(express.static('public'));
 
-//conexion mongoDB
-
-//conectarse a restaurante
-mongoose.connect('mongodb://localhost:27017/restaurante',{
-useNewUrlParser:true,//usar el parser de url
-useUnifiedTopology: true //motor de monitoreo  
+//conexion a mongo atlas usando variable de entorno
+mongoose.connect(process.env.MONGODB_URI,{
+    userNewUrlParser:true,//usar el parser url
+    useUnifiendTopology: true // motor de monitoreo
 })
-
 //si la conexion es exitosa, muestra mensaje
-.then(() =>console.log('conectado a mongo'))
+.then(() =>console.log('conectado a mongo atlas'))
 //si hay un error, que muestre un mensaje
 .catch (err=>console.error(err));
 
