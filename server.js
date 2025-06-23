@@ -22,7 +22,7 @@ app.use(express.static('public'));
 
 //conexion a mongo atlas usando variable de entorno
 mongoose.connect(process.env.MONGODB_URI,{
-    userNewUrlParser:true,//usar el parser url
+    useNewUrlParser: true,//usar el parser url
     useUnifiendTopology: true // motor de monitoreo
 })
 //si la conexion es exitosa, muestra mensaje
