@@ -10,25 +10,21 @@ const { parseURL } = require('whatwg-url');
 //crear una instancia de la aplicacion express
 const app=express();
 //definir el puerto donde se ejcutaara el server
-const PORT= process.env.PORT || 3000; //use el puerto que asigne railway o local 3000
+// CAMBIO IMPORTANTE PARA RAILWAY: USA process.env.PORT
+const PORT = process.env.PORT || 3000; // USA EL PUERTO QUE ASIGNE RAILWAY O LOCAL 3000
 
-//habilitar cors par permitir peticiones
-app.use(cors());
-// sentencia que permite a express entienda el formato
-app.use(bodyParser.json());
+// MIDDLEWARE
+app.use(cors()); // HABILITA CORS
+app.use(bodyParser.json()); // PERMITE PARSEAR JSON
+app.use(express.static('public')); // SIRVE ARCHIVOS ESTÁTICOS DESDE "public"
 
-//detectar archivos estaticos de la carpeta public
-app.use(express.static('public'));
-
-//conexion a mongo atlas usando variable de entorno
-mongoose.connect(process.env.MONGODB_URI,{
-    useNewUrlParser: true,//usar el parser url
-    useUnifiendTopology: true // motor de monitoreo
+// CONEXIÓN A MONGODB ATLAS USANDO VARIABLE DE ENTORNO
+mongoose.connect(process.env.MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
 })
-//si la conexion es exitosa, muestra mensaje
-.then(() =>console.log('CONECTADO A MONGO ATLAS'))
-//si hay un error, que muestre un mensaje
-.catch (err=>console.error('EROOR DE CONEXION:',err));
+.then(() => console.log('CONECTADO A MONGODB ATLAS'))
+.catch(err => console.error('ERROR DE CONEXIÓN:', err));
 
 //Define el esquema para los usurios
 const UsuarioSchema= new mongoose.Schema({
